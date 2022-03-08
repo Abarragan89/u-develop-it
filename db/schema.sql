@@ -1,6 +1,7 @@
 -- candidates must be drop before parties because it has the foreign key restriction to parties. It requires the party table to exist. 
 DROP TABLE IF EXISTS candidates;
 DROP TABLE IF EXISTS parties;
+DROP TABLE IF EXISTS voters;
 
 CREATE TABLE parties (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
