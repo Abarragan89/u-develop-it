@@ -121,11 +121,12 @@ app.get('/api/party/:id', (req, res) => {
     const params = [req.params.id];
 
     db.query(sql, params, (err, row) => {
+        console.log(row.affectedRows);
         if (err) {
             res.status(400).json({ error: err.message });
             return;
         }
-        res.join({
+        res.json({
             message: 'success', 
             data: row
         });
@@ -138,6 +139,7 @@ app.delete('/api/party/:id', (req, res) => {
     const params = [req.params.id];
 
     db.query(sql, params, (err, result) => {
+        console.log(result);
         if (err) {
             res.status(400).json({ error: res.message });
             // check if anything was deleted
@@ -167,7 +169,6 @@ app.put('/api/candidate/:id', (req, res) => {
                 // the params.id is who we are changing
                 // the body is what we are changing it to
     const params = [req.body.party_id, req.params.id];
-
     db.query(sql, params, (err, result) => {
         if (err) {
             res.status(400).json({ error: err.message });
