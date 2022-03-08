@@ -1,4 +1,5 @@
 -- candidates must be drop before parties because it has the foreign key restriction to parties. It requires the party table to exist. 
+DROP TABLE IF EXISTS votes;
 DROP TABLE IF EXISTS candidates;
 DROP TABLE IF EXISTS parties;
 DROP TABLE IF EXISTS voters;
@@ -26,4 +27,16 @@ CREATE TABLE voters (
     email VARCHAR(50) NOT NULL, 
     -- This says that this value should be defaulted to CURRENT_TIMESTAMP (according to the time on the server)
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE votes (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    voter_id INTEGER NOT NULL,
+    candidate_id INTEGER NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    -- only can vote once:
+    CONSTRAINT uc_voter UNIQUE (voter_id),
+    CONSTRAINT fk_voter FOREIGN KEY (voter_id) REFERENCES voters(id) ON DELETE CASCADE,
+    -- ON CASACADE: if foreign key is deleted, the whole row is deleted. 
+    CONSTRAINT fk_candidate FOREIGN KEY (candidate_id) REFERENCES candidates (id) ON DELETE CASCADE
 );
